@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Shane_Kao'
+import re
 import json
 
 from flask import Flask, request, Response, redirect, render_template
@@ -14,9 +15,24 @@ app = Flask(__name__)
 def get_short_url():
     if request.method == "GET":
         url = request.args.get('url')
+        if not re.match(r"(?P<URL>http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|("
+                        r"?:%[0-9a-fA-F][0-9a-fA-F]))+)", url):
+            return Response(
+                status=400,
+                response=json.dumps({"msg": "Invalid url"}, ensure_ascii=False),
+                mimetype="application/json"
+            )
         url = URL(raw_url=url)
+        try:
+            short_url = url.short_url
+        except Exception as e:
+            return Response(
+                status=500,
+                response=json.dumps({"msg": str(e)}, ensure_ascii=False),
+                mimetype="application/json",
+            )
         return Response(
-            response=json.dumps({"short_url": url.short_url}, ensure_ascii=False),
+            response=json.dumps({"short_url": short_url}, ensure_ascii=False),
             mimetype="application/json",
             status=200
         )

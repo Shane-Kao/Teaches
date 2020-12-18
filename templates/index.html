@@ -5,21 +5,25 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 <body>
-    <div>
-        <input type="text" id="raw_url_input" placeholder="請輸入網址">
-        <input type="submit" value="Submit" id="submit_btn">
-    </div>
-    <div>
-        <a href="" id="short_url" target="_blank"></a>
-    </div>
+<div>
+    <input type="text" id="raw_url_input" placeholder="請輸入網址">
+    <input type="submit" value="Submit" id="submit_btn">
+</div>
+<div>
+    <a href="" id="short_url" target="_blank"></a>
+</div>
 
 </body>
 <script>
-    $("#submit_btn").click(function(){
+    $("#submit_btn").click(function () {
         var raw_url = $("#raw_url_input").val();
-        $.get('/short_url?url=' + raw_url, function (d) {
-            $("#short_url").text(d.short_url);
-            $("#short_url").attr("href", d.short_url);
+        $.get('/short_url?url=' + raw_url, function (data) {
+            $("#short_url").text(data.short_url);
+            $("#short_url").attr("href", data.short_url);
+        }).fail(function (data) {
+            $("#short_url").text("");
+            $("#short_url").attr("href", "");
+            alert(data.responseJSON.msg);
         })
     })
 </script>
