@@ -3,32 +3,40 @@ __author__ = 'Shane_Kao'
 import string
 import random
 
+from configs import API
+
 
 class URL:
     raw2short = {}
     short2raw = {}
-    base_url = "http://127.0.0.1/short_url/"
+    base_url = "http://127.0.0.1:%s/short2raw/" % (API.port.value, )
 
     def __init__(self, raw_url):
         self.raw_url = raw_url
 
     @property
     def short_url(self):
-        if self.raw2short.get(self.raw_url):
-            return self.raw2short[self.raw_url]
-        while True:
-            path_ = ''.join([random.choice(string.hexdigits) for _ in range(5)])
-            if path_ not in self.raw2short:
-                self.short2raw[self.base_url + path_] = self.raw_url
-                self.raw2short[self.raw_url] = self.base_url + path_
-                break
-        return self.base_url + path_
-
-
+        if len(self.raw2short) < len(string.ascii_letters)**API.path_length.value:
+            if self.raw2short.get(self.raw_url):
+                return self.raw2short[self.raw_url]
+            while True:
+                path_ = ''.join([random.choice(string.ascii_letters) for _ in
+                                 range(API.path_length.value)])
+                if path_ not in self.raw2short:
+                    self.short2raw[self.base_url + path_] = self.raw_url
+                    self.raw2short[self.raw_url] = self.base_url + path_
+                    break
+            return self.base_url + path_
+        else:
+            raise Exception
 
 
 if __name__ == '__main__':
     url = URL(raw_url="https://www.youtube.com/watch?v=lgohIqT6HmA")
     print(url.short_url)
     url = URL(raw_url="https://www.youtube.com/watch?v=lgohIqT6HmA")
+    print(url.short_url)
+    url = URL(raw_url="https://teaches.cc/")
+    print(url.short_url)
+    url = URL(raw_url="https://teaches.cc/")
     print(url.short_url)
