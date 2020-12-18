@@ -1,1 +1,2 @@
-# Teaches
+# Testing
+pytest --cov .
