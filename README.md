@@ -1,8 +1,8 @@
 # Demo
 
-step 1: `cd api` 
-step 2: `python app.py` 
-step 3: click http://127.0.0.1:8080/
+- step 1: `cd api` 
+- step 2: `python app.py` 
+- step 3: click http://127.0.0.1:8080/ 
 
 # API
 **URL: /short_url**
