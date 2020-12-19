@@ -5,8 +5,8 @@ import json
 
 from flask import Flask, request, Response, redirect, render_template
 
-from configs import API
-from url import URL
+from api.configs import API
+from api.url import URL
 
 app = Flask(__name__)
 
@@ -37,7 +37,7 @@ def get_short_url():
             status=200
         )
     else:
-        return Response(response="Method Not Allowed", mimetype="application/json", status=405)
+        return Response(response="Method Not Allowed", status=405)
 
 
 @app.route('/short2raw', defaults={'path': ''})

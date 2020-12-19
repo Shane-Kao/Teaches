@@ -3,7 +3,7 @@ __author__ = 'Shane_Kao'
 import string
 import random
 
-from configs import API
+from api.configs import API
 
 
 class URL:
@@ -29,14 +29,3 @@ class URL:
             return self.base_url + path_
         else:
             raise Exception
-
-
-if __name__ == '__main__':
-    url = URL(raw_url="https://www.youtube.com/watch?v=lgohIqT6HmA")
-    print(url.short_url)
-    url = URL(raw_url="https://www.youtube.com/watch?v=lgohIqT6HmA")
-    print(url.short_url)
-    url = URL(raw_url="https://teaches.cc/")
-    print(url.short_url)
-    url = URL(raw_url="https://teaches.cc/")
-    print(url.short_url)
